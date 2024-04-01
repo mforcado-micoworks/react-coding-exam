@@ -1,12 +1,39 @@
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Button } from "../../components";
 import { Input } from "../../components/Input";
+import { TFormData, useFormDataContext } from "../../contexts";
+
+type TFormValue = Omit<TFormData, "isDone">;
 
 export const TodoForm = () => {
+  const [formValue, setFormValue] = useState<TFormValue>({
+    name: "",
+  });
+
+  const { setFormData } = useFormDataContext();
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    setFormData((prev) => [
+      ...prev,
+      {
+        ...formValue,
+        isDone: false,
+      },
+    ]);
+  };
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormValue({
+      ...formValue,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <div className="flex gap-3">
-        <Input />
-        <Button>Submit</Button>
+        <Input name="name" onChange={handleOnChange} />
+        <Button type="button">Submit</Button>
       </div>
     </form>
   );
