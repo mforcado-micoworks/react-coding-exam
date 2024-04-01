@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Button } from "../../components";
 import { Input } from "../../components/Input";
 import { TFormData, useFormDataContext } from "../../contexts";
@@ -12,7 +12,7 @@ export const TodoForm = () => {
 
   const { setFormData } = useFormDataContext();
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = () => {
     setFormData((prev) => [
       ...prev,
       {
